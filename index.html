@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Himalayan Learning Hub 📚</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Himalayan Learning Hub 📚</h1>
+            <p>Your one-stop destination for learning</p>
+        </header>
+
+        <main>
+            <section id="home-page" class="page-section">
+                <div class="card">
+                    <h2 class="section-title">Select Your Class</h2>
+                    <div class="class-grid" id="class-grid">
+                        </div>
+                </div>
+            </section>
+
+            <section id="subject-page" class="page-section hidden">
+                <button class="back-btn" onclick="showHomePage()">← Back to Classes</button>
+                <div class="card">
+                    <h2 id="selected-class-title" class="section-title"></h2>
+                    <div class="subject-grid" id="subject-grid">
+                        </div>
+                </div>
+            </section>
+
+            <section id="topic-page" class="page-section hidden">
+                <button class="back-btn" onclick="showSubjectPage()">← Back to Subjects</button>
+                <div class="card">
+                    <h2 id="selected-subject-title" class="section-title"></h2>
+                    <div class="topic-grid" id="topic-grid">
+                        </div>
+                </div>
+            </section>
+
+            <section id="content-page" class="page-section hidden">
+                <button class="back-btn" onclick="showTopicPage()">← Back to Topics</button>
+                <div class="card">
+                    <h1 id="topic-title" class="main-topic-title"></h1>
+                    
+                    <div class="content-section">
+                        <h2 class="content-heading">📝 Notes</h2>
+                        <div id="notes-content">
+                            </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h2 class="content-heading">❓ Short Questions (MCQ)</h2>
+                        <div id="mcq-content">
+                            </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h2 class="content-heading">❓ Short Questions (Q&A)</h2>
+                        <div id="questions-content">
+                            </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h2 class="content-heading">💬 Medium Questions</h2>
+                        <div id="medium-questions-content">
+                            </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h2 class="content-heading">✍️ Long Questions</h2>
+                        <div id="long-questions-content">
+                            </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h2 class="content-heading">🎧 Audio Sessions</h2>
+                        <div id="audio-content">
+                            </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h2 class="content-heading">🎥 Video Sessions</h2>
+                        <div id="video-content">
+                            </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h2 class="content-heading">🧠 Take Topic Quiz</h2>
+                        <div class="quiz-start-container">
+                            <button class="quiz-btn" onclick="startQuiz()">Start Quiz for this Topic</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="quiz-page" class="page-section hidden">
+                <button class="back-btn" onclick="showContentPage()">← Back to Topic</button>
+                <div class="card">
+                    <div class="quiz-container">
+                        <h1 id="quiz-title" class="section-title">Quiz</h1>
+                        
+                        <div id="quiz-progress" class="quiz-progress">
+                            <p>Question <span id="current-question">1</span> of <span id="total-questions">5</span></p>
+                        </div>
+
+                        <div id="quiz-content">
+                            <div class="quiz-question-card">
+                                <h3 id="question-text"></h3>
+                                <div class="quiz-options" id="quiz-options">
+                                    </div>
+                            </div>
+                            
+                            <button id="next-btn" class="quiz-btn" onclick="nextQuestion()" disabled>Next Question</button>
+                            <button id="submit-btn" class="quiz-btn hidden" onclick="submitQuiz()">Submit Quiz</button>
+                        </div>
+
+                        <div id="quiz-results" class="hidden">
+                            <div class="score-display">
+                                <h2>Quiz Complete! 🎉</h2>
+                                <p class="final-score-text">Your Score: <span id="final-score"></span></p>
+                                <p id="score-message" class="score-message"></p>
+                                <div class="quiz-actions">
+                                    <button class="quiz-btn" onclick="restartQuiz()">Take Quiz Again</button>
+                                    <button class="quiz-btn" onclick="showContentPage()">Back to Topic</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="data/class9/math.js"></script>
+    <script src="data/class9/science.js"></script>
+    <script src="data/class10/math.js"></script>
+    <script src="data/class10/history.js"></script>
+    <script src="data/class10/physical-science.js"></script>
+    <script src="data/class10/life-science.js"></script>
+    <script src="data/class10/physical-science.js"></script>
+    <script src="data/class10/geo.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
