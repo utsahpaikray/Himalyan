@@ -1,0 +1,16 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="'/subject/' + className"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Select Topic - {{ subjectName }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item *ngFor="let topicName of topics" (click)="selectTopic(topicName)" button>
+      <ion-label>{{ topicName }}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

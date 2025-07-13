@@ -1,0 +1,7 @@
+{
+  "name": "HimalayanLearningHub",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

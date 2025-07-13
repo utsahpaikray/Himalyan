@@ -1,0 +1,108 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="'/topic/' + className + '/' + subjectName"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ topicName }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div *ngIf="topicData">
+    <ion-list>
+      <!-- Notes Section -->
+      <ion-item-group>
+        <ion-item-divider>
+          <ion-label>Notes</ion-label>
+        </ion-item-divider>
+        <ion-item *ngFor="let note of topicData.notes" class="content-item note-item">
+          <ion-label>
+            <h3>{{ note.title }}</h3>
+            <p>{{ note.content }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-item-group>
+
+      <!-- MCQ Section -->
+      <ion-item-group>
+        <ion-item-divider>
+          <ion-label>Short Questions (MCQ)</ion-label>
+        </ion-item-divider>
+        <ion-item *ngFor="let mcq of topicData.multipleChoiceQuestions; let i = index" class="content-item mcq-item">
+          <ion-label>
+            <p><strong>Q{{ i + 1 }}:</strong> {{ mcq.question }}</p>
+            <ion-radio-group>
+              <ion-item *ngFor="let option of mcq.options; let optIndex = index">
+                <ion-radio [value]="optIndex">{{ option }}</ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-label>
+        </ion-item>
+      </ion-item-group>
+
+      <!-- Short Questions (Q&A) Section -->
+      <ion-item-group>
+        <ion-item-divider>
+          <ion-label>Short Questions (Q&A)</ion-label>
+        </ion-item-divider>
+        <ion-item *ngFor="let sq of topicData.shortQuestions" class="content-item question-item">
+          <ion-label>
+            <p><strong>Q:</strong> {{ sq.question }}</p>
+            <p><strong>A:</strong> {{ sq.answer }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-item-group>
+
+      <!-- Medium Questions Section -->
+      <ion-item-group>
+        <ion-item-divider>
+          <ion-label>Medium Questions</ion-label>
+        </ion-item-divider>
+        <ion-item *ngFor="let mq of topicData.mediumQuestions" class="content-item medium-question-item">
+          <ion-label>
+            <h3>{{ mq.question }}</h3>
+            <p>{{ mq.answer }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-item-group>
+
+      <!-- Long Questions Section -->
+      <ion-item-group>
+        <ion-item-divider>
+          <ion-label>Long Questions</ion-label>
+        </ion-item-divider>
+        <ion-item *ngFor="let lq of topicData.longQuestions" class="content-item long-question-item">
+          <ion-label>
+            <h3>{{ lq.question }}</h3>
+            <p>{{ lq.answer }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-item-group>
+
+      <!-- Audio/Video Section -->
+      <ion-item-group>
+        <ion-item-divider>
+          <ion-label>Media</ion-label>
+        </ion-item-divider>
+        <ion-item *ngFor="let audio of topicData.audio" class="content-item media-item">
+          <ion-label>{{ audio.title }}</ion-label>
+          <audio controls>
+            <source [src]="'assets/data/' + audio.src" type="audio/mpeg">
+          </audio>
+        </ion-item>
+        <ion-item *ngFor="let video of topicData.video" class="content-item media-item">
+          <ion-label>{{ video.title }}</ion-label>
+          <video controls width="100%">
+            <source [src]="'assets/data/' + video.src" type="video/mp4">
+          </video>
+        </ion-item>
+      </ion-item-group>
+    </ion-list>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="startQuiz()">
+        <ion-icon name="play"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </div>
+</ion-content>
