@@ -129,4 +129,17 @@ console.log(shortQuestionsSection)
       // Incorrect
     }
   }
+  extractStepsFromText(text: string): string[] {
+  // Normalize delimiters (replace newlines and * with full stops)
+  const normalized = text.replace(/\n|\*/g, '.');
+
+  // Split by full stop followed by space or end of sentence
+  const rawSteps = normalized.split(/\. ?/);
+
+  // Filter and trim non-empty lines
+  return rawSteps
+    .map(step => step.trim())
+    .filter(step => step.length > 0);
+}
+
 }
