@@ -1,1 +1,29 @@
-/* No specific styles needed here, relying on global and Bootstrap styles */
+.home-container {
+  background-color: #f4f7f6;
+}
+
+.hero-section {
+  background: linear-gradient(45deg, #3498db, #8e44ad);
+  padding: 4rem 2rem;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.hero-content h1 {
+  font-weight: 700;
+}
+
+.class-card {
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.class-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.card-icon {
+  font-size: 3rem;
+  color: #3498db;
+}

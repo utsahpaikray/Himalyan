@@ -11,12 +11,16 @@ export const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'subject/:className',
-    loadComponent: () => import('./subject/subject.page').then( m => m.SubjectPage)
+    path: 'class/:className',
+    loadComponent: () => import('./class/class.page').then( m => m.ClassPageComponent)
   },
   {
-    path: 'topic/:className/:subjectName',
-    loadComponent: () => import('./topic/topic.page').then( m => m.TopicPage)
+    path: 'class/:className',
+    loadComponent: () => import('./class/class.page').then( m => m.ClassPageComponent)
+  },
+  {
+    path: 'subject/:className/:subjectName',
+    loadComponent: () => import('./subject/subject.page').then( m => m.SubjectPageComponent)
   },
   {
     path: 'content/:className/:subjectName/:topicName',

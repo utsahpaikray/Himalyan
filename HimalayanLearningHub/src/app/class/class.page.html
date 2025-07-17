@@ -1,0 +1,10 @@
+<div *ngIf="className">
+  <h1 class="mb-4">{{ className }}</h1>
+  <div class="list-group">
+    <a *ngFor="let subject of subjects | async" 
+       [routerLink]="['/subject', className, subject]" 
+       class="list-group-item list-group-item-action">
+      {{ subject }}
+    </a>
+  </div>
+</div>

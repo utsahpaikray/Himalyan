@@ -26,7 +26,7 @@ export class HomePage implements OnInit {
   }
 
   selectClass(className: string) {
-    this.router.navigate(['/subject', className]);
+    this.router.navigate(['/class', className]);
   }
 }
 

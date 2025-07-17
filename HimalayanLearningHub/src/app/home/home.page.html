@@ -1,20 +1,23 @@
-<div class="container-fluid">
-  <header class="d-flex align-items-center justify-content-center p-3 bg-light shadow-sm">
-    <h1 class="h3 mb-0 text-primary">Himalayan Learning Hub 📚</h1>
-  </header>
+<div class="home-container">
+  <div class="hero-section text-center text-white">
+    <div class="hero-content">
+      <h1 class="display-4">Welcome to the Himalayan Learning Hub</h1>
+      <p class="lead">Your gateway to knowledge. Select a class to begin your learning journey.</p>
+    </div>
+  </div>
 
-  <main class="py-4">
-    <div class="container text-center">
-      <div class="card p-4 shadow-sm">
-        <h2 class="h4 mb-4 text-secondary">Select Your Class</h2>
-        <div class="row justify-content-center g-3">
-          <div class="col-12 col-md-6 col-lg-4" *ngFor="let className of classes">
-            <button class="btn btn-primary btn-lg w-100 py-4 shadow-sm" (click)="selectClass(className)">
-              {{ className }}
-            </button>
+  <div class="container py-5">
+    <h2 class="text-center mb-4">Our Classes</h2>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4" *ngFor="let className of classes">
+        <div class="card class-card h-100 shadow-sm" (click)="selectClass(className)">
+          <div class="card-body text-center">
+            <i class="bi bi-book-half card-icon mb-3"></i>
+            <h5 class="card-title">{{ className }}</h5>
+            <p class="card-text">Explore subjects and topics for {{ className }}.</p>
           </div>
         </div>
       </div>
     </div>
-  </main>
+  </div>
 </div>
