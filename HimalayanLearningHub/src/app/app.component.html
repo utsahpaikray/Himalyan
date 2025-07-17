@@ -1,16 +1,17 @@
-<ion-app>
-  <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-button routerLink="/home">
-          <ion-icon name="home"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-      <ion-title>Himalayan Learning Hub</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content>
-    <ion-router-outlet></ion-router-outlet>
-  </ion-content>
-</ion-app>
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/home">Himalayan Learning Hub</a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/home" routerLinkActive="active" ariaCurrentWhenActive="page">Home</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <router-outlet></router-outlet>
+</main>
 

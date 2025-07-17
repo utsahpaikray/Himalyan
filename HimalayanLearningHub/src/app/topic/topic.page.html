@@ -1,16 +1,23 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button [defaultHref]="'/subject/' + className"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Select Topic - {{ subjectName }}</ion-title>
-  </ion-toolbar>
-</ion-header>
+<div class="container-fluid">
+  <header class="d-flex align-items-center justify-content-between p-3 bg-light shadow-sm">
+    <button (click)="goBack()" class="btn btn-outline-primary">
+      <i class="fas fa-arrow-left me-2"></i> Back
+    </button>
+    <h1 class="h3 mb-0 text-primary">Select Topic - {{ subjectName }}</h1>
+  </header>
 
-<ion-content [fullscreen]="true">
-  <ion-list>
-    <ion-item *ngFor="let topicName of topics" (click)="selectTopic(topicName)" button>
-      <ion-label>{{ topicName }}</ion-label>
-    </ion-item>
-  </ion-list>
-</ion-content>
+  <main class="py-4">
+    <div class="container">
+      <div class="card p-4 shadow-sm">
+        <h2 class="h4 mb-4 text-secondary">Topics for {{ subjectName }}</h2>
+        <div class="row justify-content-center g-3">
+          <div class="col-12 col-md-6 col-lg-4" *ngFor="let topicName of topics">
+            <button class="btn btn-info btn-lg w-100 py-4 shadow-sm" (click)="selectTopic(topicName)">
+              {{ topicName }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

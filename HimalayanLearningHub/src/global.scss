@@ -1,146 +1,71 @@
-/*
- * App Global CSS
- * ----------------------------------------------------------------------------
- * Put style rules here that you want to apply globally. These styles are for
- * the entire app and not just one component. Additionally, this file can be
- * used as an entry point to import other CSS/Sass files to be included in the
- * output CSS.
- * For more information on global stylesheets, visit the documentation:
- * https://ionicframework.com/docs/layout/global-stylesheets
- */
-
-/* Core CSS required for Ionic components to work properly */
-@import "@ionic/angular/css/core.css";
-
-/* Basic CSS for apps built with Ionic */
-@import "@ionic/angular/css/normalize.css";
-@import "@ionic/angular/css/structure.css";
-@import "@ionic/angular/css/typography.css";
-@import "@ionic/angular/css/display.css";
-
-/* Optional CSS utils that can be commented out */
-@import "@ionic/angular/css/padding.css";
-@import "@ionic/angular/css/float-elements.css";
-@import "@ionic/angular/css/text-alignment.css";
-@import "@ionic/angular/css/text-transformation.css";
-@import "@ionic/angular/css/flex-utils.css";
-
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
-
-/* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import "@ionic/angular/css/palettes/dark.system.css";
-
-ion-toolbar {
-  --background: linear-gradient(to right, #4a90e2, #2772c3);
-  --box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-ion-title {
-  color: white;
-  font-weight: bold;
-}
+@import '~bootstrap/dist/css/bootstrap.min.css';
 
 /* Global Styles */
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #f4f7f6;
+  color: #333;
+}
+
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 5px;
-    min-height: 100vh;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
 }
 
-ion-card {
-    background: rgba(255, 255, 255, 0.95); /* Slightly transparent white */
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    padding: 5px;
-    margin-bottom: 30px;
-    backdrop-filter: blur(10px); /* Frosted glass effect */
-    -webkit-backdrop-filter: blur(10px); /* For Safari */
+.page-header {
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.section-title {
-    color: #2d3436;
-    margin-bottom: 20px;
-    font-size: 1.8rem;
-    text-align: center;
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 10px;
+.page-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--ion-color-primary);
 }
 
-ion-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    margin-bottom: 30px;
+.back-btn {
+  background: none;
+  border: none;
+  color: var(--ion-color-primary);
+  font-size: 1.2rem;
+  cursor: pointer;
 }
 
-ion-button.quiz-btn {
-    background: #00b894; /* Teal green */
-    color: white;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1rem;
-    margin: 5px; /* Adjust margin for multiple buttons */
-    transition: background 0.3s ease, transform 0.2s ease;
-    height: auto; /* Allow button to adjust height based on content */
-    --padding-start: 25px; /* Adjust Ionic button padding */
-    --padding-end: 25px;
-    --padding-top: 12px;
-    --padding-bottom: 12px;
+.page-content {
+  padding: 20px;
 }
 
-ion-button.quiz-btn:hover {
-    background: #00a085;
-    transform: translateY(-2px);
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 8px;
+  background-color: var(--ion-color-primary);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  text-align: center;
+  transition: background-color 0.3s ease;
+  border: none;
+  cursor: pointer;
 }
 
-ion-button.quiz-btn:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-    transform: none; /* Disable hover effect when disabled */
-    box-shadow: none;
+.btn:hover {
+  background-color: #3e7acb;
 }
 
-.hidden {
-    display: none !important;
-}
-
-.content-item {
-    background: #f8f9fa; /* Light grey background */
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-
-.content-item h3 {
-    color: #2d3436;
-    margin-bottom: 8px;
-}
-
-@media (max-width: 768px) {
-    ion-grid {
-        grid-template-columns: 1fr;
-    }
-
-    ion-card {
-        padding: 0px;
-    }
-
-    .section-title {
-        font-size: 1.5rem;
-    }
-
-    ion-button.quiz-btn {
-        padding: 10px 15px;
-        font-size: 0.9rem;
-    }
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
 }

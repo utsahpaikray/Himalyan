@@ -1,149 +1,92 @@
-.main-topic-title {
-    color: #2d3436;
-    margin-bottom: 30px;
-    font-size: 2rem;
-    text-align: center;
-}
+.content-page-container {
+  .page-header {
+  }
 
-/* Content Sections */
-.content-section {
-    margin-bottom: 30px;
-    background-color: #fcfcfc;
-    padding: 5px;
-    border-radius: 10px;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.05); /* Inner shadow */
-}
+  .page-content {
+    .content-item-container {
+      .note-item {
+        border-left-color: var(--ion-color-primary);
+      }
 
-/* Individual Content Items (Notes, Questions, MCQs, Media) */
-.note-item {
-    border-left: 5px solid #6c5ce7; /* Purple left border for distinction */
-}
+      .question-item {
+        border-left-color: var(--ion-color-secondary);
+        cursor: pointer;
 
-.note-item h3, .mcq-item .mcq-question-text strong, .long-question-item h3, .medium-question-item h3 {
-    color: #2d3436;
-    margin-bottom: 8px;
-}
+        .question-answer {
+          margin-top: 15px;
+          padding-top: 15px;
+          border-top: 1px solid #eee;
+          color: var(--ion-color-secondary);
+          font-weight: 600;
+        }
+      }
 
-/* Q&A Specific Styles */
-.question-item {
-    cursor: pointer;
-    transition: background 0.3s ease;
-    border-left-color: #00b894; /* Green for Q&A */
-}
+      .mcq-item {
+        border-left-color: var(--ion-color-tertiary);
 
-.question-item:hover {
-    background: #e9ecef;
-}
+        .mcq-question-text {
+          font-weight: 600;
+          margin-bottom: 15px;
+        }
 
-.question-answer {
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px solid #ddd;
-    color: #00b894;
-    font-weight: bold;
-    /* display: none; Hidden by default */
-}
+        .mcq-options {
+          .mcq-option {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
 
-/* MCQ Specific Styles */
-.mcq-item {
-    border-left-color: #fdcb6e; /* Orange for MCQ */
-}
+            &.selected {
+              background-color: var(--ion-color-primary);
+              border-color: var(--ion-color-primary);
+              color: #fff;
+            }
 
-.mcq-question-text {
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #eee;
-    margin-bottom: 10px;
-}
+            &.correct {
+              background-color: #d4edda;
+              border-color: #28a745;
+              color: #155724;
+            }
 
-.mcq-question-text:hover {
-    background-color: #f1f1f1;
-}
+            &.incorrect {
+              background-color: #f8d7da;
+              border-color: #dc3545;
+              color: #721c24;
+            }
+          }
+        }
 
-.mcq-options {
-    margin-top: 10px;
-}
+        .mcq-answer {
+          margin-top: 20px;
+          padding-top: 15px;
+          border-top: 1px dashed #ccc;
+          font-size: 1rem;
+          color: #333;
 
-.mcq-option {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-bottom: 5px;
-    cursor: pointer;
-    transition: background-color 0.2s ease, border-color 0.2s ease;
-}
+          strong {
+            color: var(--ion-color-secondary);
+          }
+        }
+      }
 
-.mcq-option:hover {
-    background-color: #e6f7ff; /* Light blue on hover */
-    border-color: #a0d9ff;
-}
-
-.mcq-option.selected {
-    background-color: #cce0ff; /* Darker blue when selected */
-    border-color: #4a90e2;
-}
-
-.mcq-option.correct {
-    background-color: #d4edda; /* Light green for correct */
-    border-color: #28a745;
-    color: #155724;
-    font-weight: bold;
-}
-
-.mcq-option.incorrect {
-    background-color: #f8d7da; /* Light red for incorrect */
-    border-color: #dc3545;
-    color: #721c24;
-    font-weight: bold;
-}
-
-.mcq-answer {
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px dashed #ccc;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    color: #34495e; /* Darker grey for readability */
-    /* display: none; Hidden by default */
-}
-
-.mcq-answer strong {
-    color: #00b894; /* Green for correct answer text */
-}
-
-/* Media Content */
-.media-item {
-    border-left-color: #00b894; /* Green for media */
-}
-
-audio, video {
-    width: 100%;
-    margin-top: 10px;
-    border-radius: 5px;
-}
-
-/* Quiz Section */
-.quiz-start-container {
-    text-align: center;
-    padding: 20px;
-    background-color: #eaf7f9;
-    border-radius: 8px;
-    border: 1px dashed #a7d9e4;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .header h1 {
-        font-size: 2rem;
+      .media-item {
+        audio,
+        video {
+          width: 100%;
+          margin-top: 10px;
+          border-radius: 8px;
+        }
+      }
     }
 
-    .section-title, .main-topic-title, .content-heading {
-        font-size: 1.5rem;
+    .quiz-start-container {
+      text-align: center;
+      padding: 30px;
+      background-color: #f4f7f6;
+      border-radius: 12px;
+      border: 1px dashed var(--ion-color-primary);
     }
-
-    .back-btn, ion-button.quiz-btn {
-        padding: 10px 15px;
-        font-size: 0.9rem;
-    }
+  }
 }

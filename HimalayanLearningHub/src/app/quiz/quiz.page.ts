@@ -1,7 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../services/data.service';
-import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -10,7 +9,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './quiz.page.html',
   styleUrls: ['./quiz.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonicModule], 
+  imports: [CommonModule, FormsModule], 
 })
 export class QuizPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
@@ -69,10 +68,8 @@ export class QuizPage implements OnInit {
       this.showResults();
       return;
     }
-    this.selectedAnswer = null; // Reset selection for new question
+    // Do not reset selectedAnswer here, it should be reset after processing the current question
   }
-
-  
 
   nextQuestion() {
     if (this.selectedAnswer === null) {
@@ -80,6 +77,7 @@ export class QuizPage implements OnInit {
       return;
     }
     this.userAnswers.push(this.selectedAnswer);
+    this.selectedAnswer = null; // Reset for the next question
     this.currentQuestionIndex++;
     this.loadQuestion();
   }
@@ -90,6 +88,7 @@ export class QuizPage implements OnInit {
       return;
     }
     this.userAnswers.push(this.selectedAnswer);
+    this.selectedAnswer = null; // Reset after submitting
     this.showResults();
   }
 

@@ -3,14 +3,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../services/data.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-subject',
   templateUrl: './subject.page.html',
   styleUrls: ['./subject.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonicModule],
+  imports: [CommonModule, FormsModule],
 })
 export class SubjectPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);

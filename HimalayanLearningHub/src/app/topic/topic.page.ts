@@ -2,15 +2,13 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../services/data.service';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-topic',
   templateUrl: './topic.page.html',
   styleUrls: ['./topic.page.scss'],
-  imports: [CommonModule, IonicModule,  CommonModule,
-    FormsModule,],
+  imports: [CommonModule, FormsModule],
   standalone: true,
 })
 export class TopicPage implements OnInit {

@@ -1,76 +1,64 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button (click)="goBackToContent()">
-        <ion-icon name="arrow-back"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title>Quiz - {{ topicName }}</ion-title>
-  </ion-toolbar>
-</ion-header>
+<div class="container-fluid">
+  <header class="d-flex align-items-center justify-content-between p-3 bg-light shadow-sm">
+    <button (click)="goBackToContent()" class="btn btn-outline-primary">
+      <i class="fas fa-arrow-left me-2"></i> Back
+    </button>
+    <h1 class="h3 mb-0 text-primary">Quiz - {{ topicName }}</h1>
+  </header>
 
-<ion-content [fullscreen]="true">
-  <div class="container">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title class="section-title">Quiz</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <div class="quiz-container">
-          <div *ngIf="quizStarted && currentQuiz.length > 0">
-            <div class="quiz-progress">
-              <p>Question {{ currentQuestionIndex + 1 }} of {{ currentQuiz.length }}</p>
-            </div>
+  <main class="py-4">
+    <div class="container">
+      <div *ngIf="quizStarted && currentQuiz.length > 0" class="card p-4 shadow-sm">
+        <div class="progress mb-3">
+          <div class="progress-bar" role="progressbar" [style.width.%]="(currentQuestionIndex + 1) / currentQuiz.length * 100" [attr.aria-valuenow]="(currentQuestionIndex + 1)" aria-valuemin="0" [attr.aria-valuemax]=" currentQuiz.length"></div>
+        </div>
+        <p class="text-center mb-4">Question {{ currentQuestionIndex + 1 }} of {{ currentQuiz.length }}</p>
 
-            <div class="quiz-question-card">
-              <h3>{{ currentQuiz[currentQuestionIndex].question }}</h3>
-              <ion-radio-group [(ngModel)]="selectedAnswer">
-                <ion-item *ngFor="let option of currentQuiz[currentQuestionIndex].options; let i = index">
-                  <ion-label>{{ option }}</ion-label>
-                  <ion-radio [value]="i"></ion-radio>
-                </ion-item>
-              </ion-radio-group>
-
-              <ion-button
-                expand="block"
-                class="quiz-btn"
-                (click)="nextQuestion()"
-                [disabled]="selectedAnswer === null"
-                *ngIf="currentQuestionIndex < currentQuiz.length - 1"
-              >
-                Next Question
-              </ion-button>
-
-              <ion-button
-                expand="block"
-                class="quiz-btn"
-                (click)="submitQuiz()"
-                [disabled]="selectedAnswer === null"
-                *ngIf="currentQuestionIndex === currentQuiz.length - 1"
-              >
-                Submit Quiz
-              </ion-button>
-            </div>
-          </div>
-
-          <div *ngIf="quizCompleted" class="quiz-results">
-            <div class="score-display">
-              <h2>Quiz Complete! 🎉</h2>
-              <p class="final-score-text">Your Score: {{ correctAnswersCount }}/{{ currentQuiz.length }} ({{ percentage }}%)</p>
-              <p class="score-message">{{ scoreMessage }}</p>
-              <div class="quiz-actions">
-                <ion-button expand="block" class="quiz-btn" (click)="restartQuiz()">Take Quiz Again</ion-button>
-                <ion-button expand="block" class="quiz-btn" (click)="goBackToContent()">Back to Topic</ion-button>
+        <div class="card mb-4">
+          <div class="card-body">
+            <h3 class="card-title mb-4">{{ currentQuiz[currentQuestionIndex].question }}</h3>
+            <fieldset class="mb-4">
+              <div *ngFor="let option of currentQuiz[currentQuestionIndex].options; let i = index" class="form-check mb-2">
+                <input class="form-check-input" type="radio" [name]="'quiz-option-' + currentQuestionIndex" [value]="i" [(ngModel)]="selectedAnswer">
+                <label class="form-check-label">{{ option }}</label>
               </div>
-            </div>
-          </div>
+            </fieldset>
 
-          <div *ngIf="!quizStarted && !quizCompleted && currentQuiz.length === 0">
-            <p class="info-message">No quiz available for this topic.</p>
-            <ion-button expand="block" class="quiz-btn" (click)="goBackToContent()">Back to Topic</ion-button>
+            <button
+              (click)="nextQuestion()"
+              [disabled]="selectedAnswer === null"
+              class="btn btn-primary w-100"
+              *ngIf="currentQuestionIndex < currentQuiz.length - 1"
+            >
+              Next Question
+            </button>
+
+            <button
+              (click)="submitQuiz()"
+              [disabled]="selectedAnswer === null"
+              class="btn btn-success w-100"
+              *ngIf="currentQuestionIndex === currentQuiz.length - 1"
+            >
+              Submit Quiz
+            </button>
           </div>
         </div>
-      </ion-card-content>
-    </ion-card>
-  </div>
-</ion-content>
+      </div>
+
+      <div *ngIf="quizCompleted" class="card p-4 shadow-sm text-center bg-success-subtle">
+        <h2 class="text-success mb-3">Quiz Complete! 🎉</h2>
+        <p class="h4 mb-2">Your Score: {{ correctAnswersCount }}/{{ currentQuiz.length }} ({{ percentage }}%)</p>
+        <p class="lead mb-4">{{ scoreMessage }}</p>
+        <div class="d-grid gap-2">
+          <button (click)="restartQuiz()" class="btn btn-primary">Take Quiz Again</button>
+          <button (click)="goBackToContent()" class="btn btn-outline-secondary">Back to Topic</button>
+        </div>
+      </div>
+
+      <div *ngIf="!quizStarted && !quizCompleted && currentQuiz.length === 0" class="card p-4 shadow-sm text-center bg-info-subtle">
+        <h2 class="text-info mb-3">No quiz available for this topic.</h2>
+        <button (click)="goBackToContent()" class="btn btn-outline-info">Back to Topic</button>
+      </div>
+    </div>
+  </main>
+</div>

@@ -3,14 +3,13 @@ import { Router } from '@angular/router';
 import { DataService } from '../services/data.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonicModule],
+  imports: [CommonModule, FormsModule],
 })
 export class HomePage implements OnInit {
   private dataService = inject(DataService);
@@ -30,3 +29,4 @@ export class HomePage implements OnInit {
     this.router.navigate(['/subject', className]);
   }
 }
+

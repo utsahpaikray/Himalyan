@@ -3,14 +3,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../services/data.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { SafeHtmlPipe } from '../safe-html.pipe'; // Import the SafeHtmlPipe
 
 @Component({
   selector: 'app-content',
   templateUrl: './content.page.html',
   styleUrls: ['./content.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonicModule],
+  imports: [CommonModule, FormsModule, SafeHtmlPipe], // Add SafeHtmlPipe to imports
 })
 export class ContentPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
@@ -21,6 +21,8 @@ export class ContentPage implements OnInit {
   subjectName: string = '';
   topicName: string = '';
   topicData: any;
+  contentItems: any[] = [];
+  hasQuiz: boolean = false;
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe((params) => {
@@ -31,9 +33,68 @@ export class ContentPage implements OnInit {
       if (this.className && this.subjectName && this.topicName) {
         this.dataService.getTopicData(this.className, this.subjectName, this.topicName).subscribe((topicData) => {
           this.topicData = topicData;
+          console.log(this.topicData)
+          this.processTopicData();
         });
       }
     });
+  }
+
+  processTopicData() {
+    this.contentItems = [
+      { title: 'Notes', type: 'notes', show: true, items: [] },
+      { title: 'Multiple Choice Questions', type: 'mcqs', show: false, items: [] },
+      { title: 'Short Questions', type: 'shortQuestions', show: false, items: [] },
+      { title: 'Medium Questions', type: 'mediumQuestions', show: false, items: [] },
+      { title: 'Long Questions', type: 'longQuestions', show: false, items: [] },
+      { title: 'Media', type: 'media', show: false, items: [] }
+    ];
+
+    const notesSection = this.contentItems.find(s => s.type === 'notes');
+    const mcqsSection = this.contentItems.find(s => s.type === 'mcqs');
+    const shortQuestionsSection = this.contentItems.find(s => s.type === 'shortQuestions');
+    const mediumQuestionsSection = this.contentItems.find(s => s.type === 'mediumQuestions');
+    const longQuestionsSection = this.contentItems.find(s => s.type === 'longQuestions');
+    const mediaSection = this.contentItems.find(s => s.type === 'media');
+console.log(shortQuestionsSection)
+    if (this.topicData.notes) {
+      notesSection.items = this.topicData.notes.map((note: any) => ({ type: 'note', ...note }));
+    }
+    if (this.topicData.multipleChoiceQuestions) {
+      mcqsSection.items = this.topicData.multipleChoiceQuestions.map((mcq: any) => ({
+        type: 'mcq',
+        ...mcq,
+        showAnswer: false,
+        selectedOption: null,
+        isAnswered: false,
+        answer: mcq.options[mcq.correct] // Ensure answer is the value of the correct option
+      }));
+    }
+    if (this.topicData.shortQuestions) {
+      shortQuestionsSection.items = this.topicData.shortQuestions.map((sq: any) => ({ type: 'short-question', ...sq, showAnswer: false }));
+    }
+    if (this.topicData.mediumQuestions) {
+      mediumQuestionsSection.items = this.topicData.mediumQuestions.map((mq: any) => ({ type: 'medium-question', ...mq, showAnswer: false }));
+    }
+    if (this.topicData.longQuestions) {
+      longQuestionsSection.items = this.topicData.longQuestions.map((lq: any) => ({ type: 'long-question', ...lq, showAnswer: false }));
+    }
+    if (this.topicData.audio) {
+      mediaSection.items.push(...this.topicData.audio.map((audio: any) => ({ type: 'media', mediaType: 'audio', ...audio })));
+    }
+    if (this.topicData.video) {
+      mediaSection.items.push(...this.topicData.video.map((video: any) => ({ type: 'media', mediaType: 'video', ...video })));
+    }
+    console.log(this.contentItems)
+
+    // Filter out empty sections
+    this.contentItems = this.contentItems.filter(section => section.items.length > 0);
+
+    this.hasQuiz = this.topicData.quiz && this.topicData.quiz.length > 0;
+  }
+
+  toggleSection(section: any) {
+    section.show = !section.show;
   }
 
   startQuiz() {
@@ -49,50 +110,23 @@ export class ContentPage implements OnInit {
     this.router.navigate(['/topic', this.className, this.subjectName]);
   }
 
-  // Implementation of toggleAnswer based on script.js logic
-  toggleAnswer(item: any, selectedOptIndex: number | null, targetElement: EventTarget | null) {
-    if (item.answer) { // This is a short question (Q&A)
-      const answerElement = (targetElement as HTMLElement)?.nextElementSibling;
-      if (answerElement && answerElement.classList.contains('question-answer')) {
-        answerElement.classList.toggle('hidden');
-      }
-    } else if (item.options) { // This is an MCQ
-      const mcqItemElement = (targetElement as HTMLElement)?.closest('.mcq-item');
-      if (!mcqItemElement) return;
+  toggleAnswer(item: any) {
+    item.showAnswer = !item.showAnswer;
+  }
 
-      // Remove previous selection highlight from this MCQ item only
-      mcqItemElement.querySelectorAll('.mcq-option').forEach((opt: Element) => {
-        opt.classList.remove('selected', 'correct', 'incorrect');
-      });
+  selectOption(mcqItem: any, selectedOption: string) {
+    if (mcqItem.isAnswered) {
+      return; // Prevent changing answer after it's been submitted
+    }
+    mcqItem.selectedOption = selectedOption;
+    mcqItem.isAnswered = true;
+    mcqItem.showAnswer = true; // Reveal answer when an option is selected
 
-      const optionElement = targetElement as HTMLElement;
-      optionElement.classList.add('selected');
-
-      if (selectedOptIndex === item.correct) {
-        optionElement.classList.add('correct');
-      } else {
-        optionElement.classList.add('incorrect');
-        // Highlight correct answer
-        const correctOptionDiv = mcqItemElement.querySelector(`.mcq-option[data-option-index="${item.correct}"]`);
-        if (correctOptionDiv) {
-          correctOptionDiv.classList.add('correct');
-        }
-      }
-
-      // Display answer and explanation
-      const answerContainer = mcqItemElement.querySelector('.mcq-answer');
-      if (answerContainer) {
-        const correctOptionTextSpan = answerContainer.querySelector('.correct-option-text');
-        const explanationTextSpan = answerContainer.querySelector('.explanation-text');
-
-        if (correctOptionTextSpan) {
-          correctOptionTextSpan.textContent = item.options[item.correct];
-        }
-        if (explanationTextSpan) {
-          explanationTextSpan.textContent = item.explanation;
-        }
-        answerContainer.classList.remove('hidden');
-      }
+    // Logic to mark correct/incorrect
+    if (mcqItem.selectedOption === mcqItem.answer) {
+      // Correct
+    } else {
+      // Incorrect
     }
   }
 }
