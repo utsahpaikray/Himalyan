@@ -12,6 +12,7 @@ export class DataService {
       'math': () => import('../../assets/data/class10/math').then(m => m.Math),
       'life-science': () => import('../../assets/data/class10/life-science').then(m => m.lifeScience),
       'physical-science': () => import('../../assets/data/class10/physical-science').then(m => m.physicalScience),
+      'social-science': () => import('../../assets/data/class10/history').then(m => m.history),
     },
     'class9': {
       'math': () => import('../../assets/data/class9/math').then(m => m.math),

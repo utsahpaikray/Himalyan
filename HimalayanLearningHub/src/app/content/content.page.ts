@@ -129,17 +129,43 @@ console.log(shortQuestionsSection)
       // Incorrect
     }
   }
-  extractStepsFromText(text: string): string[] {
-  // Normalize delimiters (replace newlines and * with full stops)
-  const normalized = text.replace(/\n|\*/g, '.');
+  /**
+   * Extracts steps from a given text, assuming steps are formatted as Markdown list items.
+   * Supports numbered lists (e.g., "1. Step one") and bulleted lists (e.g., "- Step one", "* Step one").
+   * @param text The input text containing potential steps.
+   * @returns An array of extracted step strings.
+   */
+extractStepsFromText(text: string): string[] {
+  // Step 1: Remove markdown and normalize formatting
+  const cleanedText = text
+    .replace(/\*\*(.*?)\*\*/g, '$1')      // Remove bold markdown
+    .replace(/[।]/g, '.')                 // Replace Odia danda with full stop
+    .replace(/[:：]/g, ':')               // Normalize all colons
+    .replace(/\r?\n/g, ' ')               // Remove all line breaks
+    .replace(/ +/g, ' ')                  // Remove extra spaces
+    .trim();
 
-  // Split by full stop followed by space or end of sentence
-  const rawSteps = normalized.split(/\. ?/);
+  const result: string[] = [];
 
-  // Filter and trim non-empty lines
-  return rawSteps
-    .map(step => step.trim())
-    .filter(step => step.length > 0);
+  // Step 2: Extract bullet-style entries (with optional titles)
+  const bulletRegex = /\*\s*([^:]+):\s*([^*]+)/g;
+  let match;
+  while ((match = bulletRegex.exec(cleanedText)) !== null) {
+    const title = match[1].trim();
+    const description = match[2].trim().replace(/\s*\.$/, ''); // Remove trailing period
+    result.push(`${title}: ${description}`);
+  }
+
+  // Step 3: Remove bullets from main text
+  const textWithoutBullets = cleanedText.replace(/\*\s*[^:]+:\s*[^*]+/g, '');
+
+  // Step 4: Extract remaining clean sentences
+  const sentences = textWithoutBullets
+    .split('.')
+    .map(s => s.trim())
+    .filter(s => s.length > 5);
+
+  return [...sentences, ...result];
 }
 
 }

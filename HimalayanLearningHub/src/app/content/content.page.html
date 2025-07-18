@@ -1,130 +1,88 @@
-<div class="container-fluid">
-  <header
-    class="d-flex align-items-center justify-content-between p-3 bg-light shadow-sm"
-  >
+<div class="container-fluid content-page-container">
+  <header class="d-flex align-items-center justify-content-between p-3 bg-light shadow-sm page-header">
     <button (click)="goBack()" class="btn btn-outline-primary">
       <i class="fas fa-arrow-left me-2"></i> Back
     </button>
     <h1 class="h3 mb-0 text-primary">{{ topicName }}</h1>
   </header>
 
-  <main class="py-4">
-    <div *ngFor="let section of contentItems" class="card mb-3">
-      <div
-        class="card-header d-flex justify-content-between align-items-center cursor-pointer"
-        (click)="toggleSection(section)"
-      >
+  <main class="py-4 page-content">
+    <div *ngFor="let section of contentItems" class="card mb-4 shadow-sm content-item-container">
+      <div class="card-header d-flex justify-content-between align-items-center cursor-pointer" (click)="toggleSection(section)">
         <h2 class="h5 mb-0">{{ section.title }}</h2>
-        <i
-          class="fas"
-          [class.fa-chevron-down]="!section.show"
-          [class.fa-chevron-up]="section.show"
-        ></i>
+        <i class="fas" [class.fa-chevron-down]="!section.show" [class.fa-chevron-up]="section.show"></i>
       </div>
-      <!-- <pre>{{section | json}}</pre> -->
-      <div class="card-body" *ngIf="section.show">
-        <div *ngFor="let item of section.items" class="mb-3">
-          <div [ngSwitch]="item.type">
-            <!-- {{item.type}} -->
-            <div *ngSwitchCase="'note'">
-              <h3 class="card-title text-primary">{{ item.title }}</h3>
-              <div
-                class="card-text"
-                [innerHTML]="item.content | safeHtml"
-              ></div>
-            </div>
 
-            <div
-              *ngSwitchCase="'long-question'"
-              class="cursor-pointer"
-              (click)="toggleAnswer(item)"
-            >
-              <h3 class="card-title text-success">{{ item.question }}</h3>
-              <div
-                *ngIf="item.showAnswer"
-                class="mt-3 pt-3 border-top border-success text-success fw-bold"
-              >
-                <ul class="list-disc list-inside text-lg space-y-2">
-                  <li *ngFor="let step of extractStepsFromText(item.answer)">
-                    {{ step }}
+      <div class="card-body" *ngIf="section.show">
+        <div *ngFor="let item of section.items" class="mb-4">
+          <div [ngSwitch]="item.type">
+            <!-- Note -->
+            <div *ngSwitchCase="'note'" class="note-item p-3 border-start border-primary border-4">
+              <h3 class="card-title text-primary h5">{{ item.title }}</h3>
+              <div class="card-text mt-2">
+                <ul class="list-unstyled">
+                  <li *ngFor="let step of extractStepsFromText(item.content)" class="mb-2">
+                    <i class="fas fa-check-circle text-primary me-2"></i>{{ step }}
                   </li>
                 </ul>
-                <!-- <p>{{ item.answer }}</p> -->
               </div>
             </div>
 
-            <div
-              *ngSwitchCase="'medium-questions'"
-              class="cursor-pointer"
-              (click)="toggleAnswer(item)"
-            >
-              <h3 class="card-title text-success">{{ item.question }}</h3>
-              <div
-                *ngIf="item.showAnswer"
-                class="mt-3 pt-3 border-top border-success text-success fw-bold"
-              >
-                <p>{{ item.answer }}</p>
-              </div>
-            </div>
-            <div
-              *ngSwitchCase="'short-question'"
-              class="cursor-pointer"
-              (click)="toggleAnswer(item)"
-            >
-              <h3 class="card-title text-success">{{ item.question }}</h3>
-              <div
-                *ngIf="item.showAnswer"
-                class="mt-3 pt-3 border-top border-success text-success fw-bold"
-              >
-                <p>{{ item.answer }}</p>
+            <!-- Long Question -->
+            <div *ngSwitchCase="'long-question'" class="question-item p-3 border-start border-success border-4 cursor-pointer" (click)="toggleAnswer(item)">
+              <h3 class="card-title text-success h5">{{ item.question }}</h3>
+              <div *ngIf="item.showAnswer" class="mt-3 pt-3 border-top">
+                <ul class="list-unstyled">
+                  <li *ngFor="let step of extractStepsFromText(item.answer)" class="mb-2">
+                    <i class="fas fa-arrow-right text-success me-2"></i>{{ step }}
+                  </li>
+                </ul>
               </div>
             </div>
 
-            <div *ngSwitchCase="'mcq'">
+            <!-- Short Question -->
+            <div *ngSwitchCase="'short-question'" class="question-item p-3 border-start border-info border-4 cursor-pointer" (click)="toggleAnswer(item)">
+              <h3 class="card-title text-info h5">{{ item.question }}</h3>
+              <div *ngIf="item.showAnswer" class="mt-3 pt-3 border-top">
+                <p class="mb-0">{{ item.answer }}</p>
+              </div>
+            </div>
+
+            <!-- MCQ -->
+            <div *ngSwitchCase="'mcq'" class="mcq-item p-3 border-start border-warning border-4">
               <div class="cursor-pointer" (click)="toggleAnswer(item)">
-                <strong class="text-warning">{{ item.question }}</strong>
+                <strong class="text-success h5">{{ item.question }}</strong>
               </div>
               <div *ngIf="item.showAnswer" class="mt-3">
-                <div
-                  *ngFor="let option of item.options; let i = index"
-                  class="form-check mb-2 p-3 border rounded cursor-pointer"
+                <div *ngFor="let option of item.options; let i = index" class="form-check mb-2 p-3 border rounded cursor-pointer mcq-option"
                   [class.bg-primary-subtle]="item.selectedOption === option"
                   [class.border-primary]="item.selectedOption === option"
                   [class.bg-success-subtle]="item.isAnswered && option === item.answer"
                   [class.border-success]="item.isAnswered && option === item.answer"
                   [class.bg-danger-subtle]="item.isAnswered && item.selectedOption === option && option !== item.answer"
                   [class.border-danger]="item.isAnswered && item.selectedOption === option && option !== item.answer"
-                  (click)="selectOption(item, option)"
-                >
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    [name]="'mcq-' + item.question"
-                    [value]="option"
-                    [checked]="item.selectedOption === option"
-                  />
+                  (click)="selectOption(item, option)">
+                  <input class="form-check-input" type="radio" [name]="'mcq-' + i" [value]="option" [checked]="item.selectedOption === option">
                   <label class="form-check-label">{{ option }}</label>
                 </div>
               </div>
-              <div
-                *ngIf="item.showAnswer && item.isAnswered"
-                class="mt-4 pt-3 border-top text-dark"
-              >
+              <div *ngIf="item.showAnswer && item.isAnswered" class="mt-4 pt-3 border-top text-dark mcq-answer">
                 <strong class="text-success">Answer: {{ item.answer }}</strong>
               </div>
             </div>
 
-            <div *ngSwitchCase="'media'">
-              <h3 class="card-title text-info">{{ item.title }}</h3>
+            <!-- Media -->
+            <div *ngSwitchCase="'media'" class="media-item">
+              <h3 class="card-title text-info h5">{{ item.title }}</h3>
               <div *ngIf="item.mediaType === 'audio'">
                 <audio controls class="w-100 mt-2 rounded">
-                  <source [src]="item.mediaUrl" type="audio/mpeg" />
+                  <source [src]="item.mediaUrl" type="audio/mpeg">
                   Your browser does not support the audio element.
                 </audio>
               </div>
               <div *ngIf="item.mediaType === 'video'">
                 <video controls class="w-100 mt-2 rounded">
-                  <source [src]="item.mediaUrl" type="video/mp4" />
+                  <source [src]="item.mediaUrl" type="video/mp4">
                   Your browser does not support the video tag.
                 </video>
               </div>
@@ -134,10 +92,7 @@
       </div>
     </div>
 
-    <div
-      *ngIf="hasQuiz"
-      class="text-center p-4 bg-light border border-primary rounded"
-    >
+    <div *ngIf="hasQuiz" class="text-center p-4 bg-light border border-primary rounded quiz-start-container">
       <h2 class="h4 mb-3">Ready for a Quiz?</h2>
       <p class="mb-4">Test your knowledge on this topic!</p>
       <button (click)="startQuiz()" class="btn btn-primary">Start Quiz</button>

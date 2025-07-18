@@ -398,20 +398,12 @@ export class MarkdownParserService {
   /**
    * Helper method to get section name from delimiter line
    */
-  private getSectionNameFromDelimiter(line: string): keyof typeof this.sectionsMap | null {
+  private getSectionNameFromDelimiter(line: string): 'mcq' | 'shortQuestions' | 'longQuestions' | null {
     if (line.includes('MCQ section')) return 'mcq';
     if (line.includes('shortQuestions Section')) return 'shortQuestions';
     if (line.includes('longQuestions Section')) return 'longQuestions';
     return null;
   }
-
-  // Define sectionsMap for getSectionNameFromDelimiter
-  private sectionsMap = {
-    mcq: [] as string[],
-    shortQuestions: [] as string[],
-    longQuestions: [] as string[],
-    notes: [] as string[]
-  };
 
   /**
    * Helper method to check if line contains an answer
